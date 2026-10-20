@@ -7,8 +7,12 @@
 <title>Mantar Kataloğu</title>
 <link rel="stylesheet" href="style.css">
 <script>
-  // Tema titremesini önlemek için erken uygula
-  try { const t = localStorage.getItem("mk-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  // Tema ve dil titremesini önlemek için erken uygula
+  try {
+    const t = localStorage.getItem("mk-theme"); if (t) document.documentElement.dataset.theme = t;
+    const l = localStorage.getItem("mk-lang") || ((navigator.language || "tr").toLowerCase().startsWith("tr") ? "tr" : "en");
+    document.documentElement.lang = l;
+  } catch (e) {}
 </script>
 </head>
 <body>
@@ -18,54 +22,37 @@
 
 <header class="toolbar glass">
   <div class="toolbar-row">
-    <h1>🍄 Mantar Kataloğu</h1>
+    <h1>🍄 <span data-i18n="title"></span></h1>
     <div class="search glass-inset">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm9 16-4-4"/></svg>
-      <input type="search" id="search" placeholder="Türkçe, Latince veya cins adıyla ara…" aria-label="Mantar ara" autocomplete="off">
+      <input type="search" id="search" data-i18n-ph="search" data-i18n-aria="search_aria" autocomplete="off">
     </div>
-    <button class="btn icon" id="theme" aria-label="Temayı değiştir" title="Açık / koyu tema"></button>
+    <button class="btn lang" id="lang" aria-label="Language / Dil" title="Language / Dil"></button>
+    <button class="btn icon" id="theme" data-i18n-aria="theme" data-i18n-title="theme"></button>
   </div>
-  <div class="tabs" id="tabs" role="tablist" aria-label="Kategoriler"></div>
+  <div class="tabs" id="tabs" role="tablist"></div>
 </header>
 
 <main>
-  <section class="intro glass">
-    <p><strong>⚠ Uyarı:</strong> Bu katalog yalnızca bilgilendirme amaçlıdır; sınıflandırmalar Wikipedia kategorilerinden derlenmiştir ve eksik veya hatalı olabilir.
-    Fotoğraftan mantar tanıyarak yemek hayati risk taşır. Uzman (mikolog) onayı olmadan hiçbir mantarı tüketmeyin.
-    Zehirlenme şüphesinde hemen <strong>112</strong> veya Ulusal Zehir Danışma Merkezi <strong>114</strong>'ü arayın.</p>
-  </section>
+  <section class="intro glass"><p data-i18n-html="intro"></p></section>
   <details class="info-card glass">
-    <summary>Doğru bilinen yanlışlar ve zehirlenme belirtileri</summary>
-    <div class="info-body">
-      <p>Türkiye'de yaklaşık 2200 makromantar türü bilinir; bunların yaklaşık 300'ü yenilebilir niteliktedir.
-      Zehirli ve yenilebilir mantarlar yan yana yetişebilir ve çoğu zaman ayırt etmek çok zordur. Aşağıdakilerin <strong>hepsi yanlış inanışlardır</strong>:</p>
-      <ul>
-        <li>Zehirli ve yenen mantarlar ayrı topraklarda yetişir.</li>
-        <li>Koparılınca iç kısmı mavileşen mantar zehirlidir, rengi değişmeyen ve hoş kokulu olan zararsızdır.</li>
-        <li>Gümüş kaşık veya para ile pişirilince kararıyorsa zehirlidir.</li>
-        <li>Salyangozların ve böceklerin yediği mantar zehirsizdir.</li>
-        <li>Çayırlarda veya ağaçlar üzerinde yetişen mantarlar zehirsizdir.</li>
-        <li>Tuzlu veya sirkeli suda kaynatmak zehirliliği ortadan kaldırır; kurutmak veya pişirmek zehri yok eder.</li>
-        <li>Yanında demir varsa zehirlidir; zehiri mantara yılanlar verir.</li>
-      </ul>
-      <p><strong>Belirtiler.</strong> Yedikten sonra 2 saate kadar: sersemlik, uykuya meyil, tansiyon düşüklüğü, bulanık görme, yüz ve boyunda kızarma, nabız artışı, ağızda metal tadı, bulantı, kusma, terleme.
-      6 saat ve sonrasında: bulantı, kusma, ishal, ateş, karın ağrısı, karaciğer ve böbrek bozuklukları. Belirtiler gecikmeli başladığı için iyi hissetmek güvence değildir; şüphede hemen acile gidin.</p>
-      <p class="src">Kaynak: Ercan Karaduman, "Doğal Mantarlar", Samsun Tarım ve Orman İl Müdürlüğü.</p>
-    </div>
+    <summary data-i18n="info_title"></summary>
+    <div class="info-body" data-i18n-html="info_body"></div>
   </details>
   <p class="count" id="count" aria-live="polite"></p>
   <section class="grid" id="grid"></section>
-  <div class="more"><button class="btn" id="more" hidden>Daha fazla göster</button></div>
+  <div class="more"><button class="btn" id="more" hidden></button></div>
 </main>
 
 <dialog id="modal" class="glass">
-  <button class="btn icon close" id="close" aria-label="Kapat">✕</button>
+  <button class="btn icon close" id="close" data-i18n-aria="close">✕</button>
   <div id="modal-body"></div>
 </dialog>
 
-<footer>Fotoğraflar Wikimedia Commons'tan, bilgiler Wikipedia ve Wikidata'dan alınmıştır; telif hakları ilgili fotoğrafçılara ve yazarlara aittir (CC lisansları).</footer>
+<footer data-i18n="footer"></footer>
 
 <script src="data.js"></script>
+<script src="i18n.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
