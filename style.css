@@ -48,25 +48,23 @@ body {
 
 /* ---------- Arka plan: canlı renkli blob'lar (camın arkasından görünür) ---------- */
 .bg { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
-.blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: var(--blob-op); will-change: transform; animation: drift 26s ease-in-out infinite alternate; }
-.b1 { width: 46vmax; height: 46vmax; left: -12vmax; top: -10vmax; background: var(--blob-a); }
-.b2 { width: 40vmax; height: 40vmax; right: -10vmax; top: 8vh; background: var(--blob-c); animation-duration: 32s; animation-delay: -6s; }
-.b3 { width: 38vmax; height: 38vmax; left: 20vw; bottom: -16vmax; background: var(--blob-b); animation-duration: 28s; animation-delay: -12s; }
-.b4 { width: 26vmax; height: 26vmax; right: 12vw; bottom: 6vh; background: var(--blob-d); animation-duration: 36s; animation-delay: -3s; }
-.b5 { width: 22vmax; height: 22vmax; left: 40vw; top: 30vh; background: var(--blob-e); animation-duration: 30s; animation-delay: -18s; }
-@keyframes drift { to { transform: translate(8vw, 6vh) scale(1.15) rotate(30deg); } }
-@media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+.blob { position: absolute; border-radius: 50%; opacity: var(--blob-op); background: radial-gradient(circle, var(--bc) 0%, transparent 68%); }
+.b1 { width: 46vmax; height: 46vmax; left: -12vmax; top: -10vmax; --bc: var(--blob-a); }
+.b2 { width: 40vmax; height: 40vmax; right: -10vmax; top: 8vh; --bc: var(--blob-c); }
+.b3 { width: 38vmax; height: 38vmax; left: 20vw; bottom: -16vmax; --bc: var(--blob-b); }
+.b4 { width: 26vmax; height: 26vmax; right: 12vw; bottom: 6vh; --bc: var(--blob-d); }
+.b5 { width: 22vmax; height: 22vmax; left: 40vw; top: 30vh; --bc: var(--blob-e); }
 
 /* ---------- Cam yüzeyler ---------- */
 .glass {
   background: var(--glass);
-  -webkit-backdrop-filter: blur(26px) saturate(185%); backdrop-filter: blur(26px) saturate(185%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow), var(--glass-hi);
 }
 .glass-inset {
   background: var(--glass);
-  -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border); box-shadow: var(--glass-hi);
 }
 
@@ -85,7 +83,7 @@ h1 { margin: 0; font-size: 21px; letter-spacing: -.02em; white-space: nowrap; }
 .btn {
   font: inherit; font-size: 14px; color: var(--ink); cursor: pointer; padding: 9px 16px; border-radius: 999px;
   background: var(--glass); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi), 0 2px 8px rgba(0, 0, 0, .08);
-  -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   transition: transform .15s, background .2s, box-shadow .2s;
 }
 .btn:hover { background: var(--glass-strong); transform: translateY(-1px); }
@@ -110,9 +108,9 @@ main { width: min(1240px, calc(100% - 24px)); margin: 0 auto; padding-bottom: 32
 .card {
   position: relative; display: flex; flex-direction: column; text-align: left; padding: 8px; color: inherit; font: inherit; cursor: pointer;
   border-radius: 24px; background: var(--glass);
-  -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%); backdrop-filter: blur(12px) saturate(150%);
   border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi);
-  transition: transform .2s ease, box-shadow .2s ease, background .2s;
+  transition: transform .2s ease, background .2s;
   content-visibility: auto; contain-intrinsic-size: 330px 300px;
 }
 .card:hover { transform: translateY(-4px); background: var(--glass-strong); }
