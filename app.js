@@ -33,7 +33,7 @@ const warning = (m) => (isTr() ? m.w : m.we);
 
 MUSHROOMS.forEach((m) => { m.s_ = norm([m.t, m.n, m.l, m.g].filter(Boolean).join(" ")); });
 
-const CAT_ORDER = ["yenilebilir", "sartli", "zehirli", "olumcul", "halusinojen"];
+const CAT_ORDER = ["yenilebilir", "sartli", "yenmez", "zehirli", "olumcul", "halusinojen"];
 const localName = (m) => (isTr() ? m.t : m.n) || "";
 // Harf: yerel (Türkçe/İngilizce) adın ilk harfi; Latince adı olmayanlar harf filtresine girmez
 function letterOf(m) {
@@ -93,20 +93,25 @@ function render(reset = true) {
 }
 
 // ---- Alfabetik katalog ----
+const ALPHA = {
+  tr: "ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ".split(""),
+  en: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),
+};
 function buildLetters() {
-  const col = new Intl.Collator(isTr() ? "tr" : "en");
   const base = MUSHROOMS.filter((m) => state.cat === "hepsi" || m.c === state.cat);
   const counts = {}; let latin = 0;
   base.forEach((m) => { const l = letterOf(m); if (l) counts[l] = (counts[l] || 0) + 1; else latin++; });
-  const all = [...new Set(MUSHROOMS.map(letterOf).filter(Boolean))].sort(col.compare);
   $("letters").innerHTML =
     `<button class="btn chip" data-letter="" aria-pressed="false">${T().az_all}</button>` +
-    all.map((l) => `<button class="btn chip" data-letter="${l}" aria-pressed="false" ${counts[l] ? "" : "disabled"} title="${counts[l] || 0}">${l}</button>`).join("") +
+    ALPHA[state.lang].map((l) => `<button class="btn chip" data-letter="${l}" aria-pressed="false" ${counts[l] ? "" : "disabled"} title="${counts[l] || 0}">${l}</button>`).join("") +
     `<button class="btn chip latin" data-letter="#" aria-pressed="false" ${latin ? "" : "disabled"} title="${latin}">${T().az_latin}</button>`;
   paintLetters();
 }
+function centerIn(row, el) { if (el) row.scrollTo({ left: el.offsetLeft - row.clientWidth / 2 + el.offsetWidth / 2, behavior: "smooth" }); }
 function paintLetters() {
-  document.querySelectorAll("#letters .chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.letter === state.letter));
+  let on = null;
+  document.querySelectorAll("#letters .chip").forEach((c) => { const p = c.dataset.letter === state.letter; c.setAttribute("aria-pressed", p); if (p) on = c; });
+  if (state.letter) centerIn($("letters"), on);
 }
 
 let openId = null;
@@ -133,12 +138,14 @@ function openModal(id) {
         <div class="m-actions">
           <a class="btn" href="https://en.wikipedia.org/wiki/${encodeURIComponent(m.p)}" target="_blank" rel="noopener">${t.wiki_en}</a>
           ${m.ms ? `<a class="btn" href="https://mantarliyasam.com/${m.ms}" target="_blank" rel="noopener">${t.ms_link}</a>` : ""}
+          ${m.um ? `<a class="btn" href="https://ultimate-mushroom.com/${isTr() ? "tr/" : ""}${m.um}" target="_blank" rel="noopener">${t.um_link}</a>` : ""}
           ${isTr() ? `<a class="btn" href="https://tr.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(m.l)}" target="_blank" rel="noopener">${t.wiki_tr}</a>` : ""}
         </div>
       </div>
     </div>`;
+  $("modal-title").textContent = title(m);
   bindImages($("modal-body"));
-  if (!$("modal").open) $("modal").showModal();
+  if (!$("modal").open) { $("modal").showModal(); document.documentElement.classList.add("modal-open"); }
   $("modal").scrollTop = 0;
 }
 
@@ -191,6 +198,7 @@ function init() {
     const b = e.target.closest(".tab"); if (!b) return;
     state.cat = b.dataset.cat;
     document.querySelectorAll(".tab").forEach((x) => x.setAttribute("aria-selected", x === b));
+    centerIn($("tabs"), b);
     if (state.letter && state.letter !== "#" && !filtered(true).some((m) => letterOf(m) === state.letter)) state.letter = "";
     buildLetters(); render();
   });
@@ -204,6 +212,7 @@ function init() {
   });
   $("more").addEventListener("click", () => { state.shown += PAGE; render(false); });
   $("close").addEventListener("click", () => $("modal").close());
+  $("modal").addEventListener("close", () => document.documentElement.classList.remove("modal-open"));
   $("modal").addEventListener("click", (e) => { if (e.target === $("modal")) $("modal").close(); });
   paintThemeBtn();
   applyLang();

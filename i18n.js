@@ -4,8 +4,8 @@ const I18N = {
     title: "Mantar Kataloğu",
     search: "Türkçe, Latince veya cins adıyla ara…", search_aria: "Mantar ara", theme: "Açık / koyu tema", close: "Kapat", top: "Başa dön",
     all: "Tümü", az_all: "A–Z", az_latin: "Latince adlı", az_aria: "Ada göre harf kataloğu",
-    ms_note: "Türkçe adlar ve Türkiye'ye dair mevsim/bölge bilgileri için mantarliyasam.com ile karşılaştırılmıştır.", ms_link: "Mantarlı Yaşam'da oku ↗",
-    cat: { yenilebilir: "Yenilebilir", sartli: "Şartlı Yenilebilir", zehirli: "Zehirli", olumcul: "Ölümcül", halusinojen: "Halüsinojen" },
+    ms_note: "Türkçe adlar ve Türkiye'ye dair mevsim/bölge bilgileri için mantarliyasam.com ile karşılaştırılmıştır.", ms_link: "Mantarlı Yaşam'da oku ↗", um_link: "Ultimate Mushroom'da oku ↗",
+    cat: { yenilebilir: "Yenilebilir", sartli: "Şartlı Yenilebilir", yenmez: "Yenmeyen", zehirli: "Zehirli", olumcul: "Ölümcül", halusinojen: "Halüsinojen" },
     count: (n) => `${n} mantar türü listeniyor`, more: (n) => `Daha fazla göster (${n} tür daha)`, empty: "Sonuç bulunamadı.",
     genus: "Cins", genus_sub: (g) => `${g} cinsi`, habitat: "Yetiştiği ortam", hab_note: "Cins düzeyinde genel bilgi ve Wikipedia metninden otomatik derlenmiştir; yerel ayrıntılar farklı olabilir.", season: "Mevsim", tags: "Etiketler",
     tag: { halusinojen: "Psikoaktif", tibbi: "Tıbbi kullanım" }, warn: "Dikkat:",
@@ -23,14 +23,14 @@ const I18N = {
       <li>Yanında demir varsa zehirlidir; zehiri mantara yılanlar verir.</li></ul>
       <p><strong>Belirtiler.</strong> Yedikten sonra 2 saate kadar: sersemlik, uykuya meyil, tansiyon düşüklüğü, bulanık görme, yüz ve boyunda kızarma, nabız artışı, ağızda metal tadı, bulantı, kusma, terleme. 6 saat ve sonrasında: bulantı, kusma, ishal, ateş, karın ağrısı, karaciğer ve böbrek bozuklukları. Belirtiler gecikmeli başladığı için iyi hissetmek güvence değildir; şüphede hemen acile gidin.</p>
       <p class="src">Kaynak: Ercan Karaduman, "Doğal Mantarlar", Samsun Tarım ve Orman İl Müdürlüğü.</p>`,
-    footer: "Fotoğraflar Wikimedia Commons'tan, bilgiler Wikipedia ve Wikidata'dan alınmıştır; telif hakları ilgili fotoğrafçılara ve yazarlara aittir (CC lisansları).",
+    footer: "Fotoğraflar Wikimedia Commons'tan, bilgiler Wikipedia ve Wikidata'dan alınmış, mantarliyasam.com ve ultimate-mushroom.com ile karşılaştırılmıştır; telif hakları ilgili fotoğrafçılara ve yazarlara aittir (CC lisansları).",
   },
   en: {
     title: "Mushroom Catalog",
     search: "Search by common, Latin or genus name…", search_aria: "Search mushrooms", theme: "Light / dark theme", close: "Close", top: "Back to top",
     all: "All", az_all: "A–Z", az_latin: "Latin only", az_aria: "Alphabetical index by name",
-    ms_note: "Turkish names and Turkish season/region information were cross-checked against mantarliyasam.com.", ms_link: "Read on Mantarlı Yaşam ↗",
-    cat: { yenilebilir: "Edible", sartli: "Conditionally Edible", zehirli: "Poisonous", olumcul: "Deadly", halusinojen: "Hallucinogenic" },
+    ms_note: "Turkish names and Turkish season/region information were cross-checked against mantarliyasam.com.", ms_link: "Read on Mantarlı Yaşam ↗", um_link: "Read on Ultimate Mushroom ↗",
+    cat: { yenilebilir: "Edible", sartli: "Conditionally Edible", yenmez: "Inedible", zehirli: "Poisonous", olumcul: "Deadly", halusinojen: "Hallucinogenic" },
     count: (n) => `Showing ${n} mushroom species`, more: (n) => `Show more (${n} more)`, empty: "No results found.",
     genus: "Genus", genus_sub: (g) => `Genus ${g}`, habitat: "Habitat", hab_note: "Compiled automatically from genus-level knowledge and Wikipedia text; local details may differ.", season: "Season", tags: "Tags",
     tag: { halusinojen: "Psychoactive", tibbi: "Medicinal use" }, warn: "Warning:",
@@ -48,6 +48,6 @@ const I18N = {
       <li>If there is iron nearby it is poisonous; snakes give mushrooms their poison.</li></ul>
       <p><strong>Symptoms.</strong> Within 2 hours of eating: dizziness, drowsiness, low blood pressure, blurred vision, flushing of the face and neck, fast pulse, a metallic taste, nausea, vomiting, sweating. After 6 hours or more: nausea, vomiting, diarrhoea, fever, abdominal pain, liver and kidney disorders. Because symptoms can start late, feeling well is no guarantee; go to the emergency room at the slightest suspicion.</p>
       <p class="src">Source: Ercan Karaduman, “Doğal Mantarlar”, Samsun Provincial Directorate of Agriculture and Forestry.</p>`,
-    footer: "Photos are from Wikimedia Commons and information from Wikipedia and Wikidata; copyrights belong to the respective photographers and authors (CC licences).",
+    footer: "Photos are from Wikimedia Commons and information from Wikipedia and Wikidata, cross-checked against mantarliyasam.com and ultimate-mushroom.com; copyrights belong to the respective photographers and authors (CC licences).",
   },
 };
