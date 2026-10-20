@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Mantar Kataloğu</title>
+<link rel="stylesheet" href="style.css">
+<script>
+  // Tema titremesini önlemek için erken uygula
+  try { const t = localStorage.getItem("mk-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><i class="blob b4"></i><i class="blob b5"></i>
+</div>
+
+<header class="toolbar glass">
+  <div class="toolbar-row">
+    <h1>🍄 Mantar Kataloğu</h1>
+    <div class="search glass-inset">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm9 16-4-4"/></svg>
+      <input type="search" id="search" placeholder="Türkçe, Latince veya cins adıyla ara…" aria-label="Mantar ara" autocomplete="off">
+    </div>
+    <button class="btn icon" id="theme" aria-label="Temayı değiştir" title="Açık / koyu tema"></button>
+  </div>
+  <div class="tabs" id="tabs" role="tablist" aria-label="Kategoriler"></div>
+</header>
+
+<main>
+  <section class="intro glass">
+    <p><strong>⚠ Uyarı:</strong> Bu katalog yalnızca bilgilendirme amaçlıdır; sınıflandırmalar Wikipedia kategorilerinden derlenmiştir ve eksik veya hatalı olabilir.
+    Fotoğraftan mantar tanıyarak yemek hayati risk taşır. Uzman (mikolog) onayı olmadan hiçbir mantarı tüketmeyin.
+    Zehirlenme şüphesinde hemen <strong>112</strong> veya Ulusal Zehir Danışma Merkezi <strong>114</strong>'ü arayın.</p>
+  </section>
+  <p class="count" id="count" aria-live="polite"></p>
+  <section class="grid" id="grid"></section>
+  <div class="more"><button class="btn" id="more" hidden>Daha fazla göster</button></div>
+</main>
+
+<dialog id="modal" class="glass">
+  <button class="btn icon close" id="close" aria-label="Kapat">✕</button>
+  <div id="modal-body"></div>
+</dialog>
+
+<footer>Fotoğraflar Wikimedia Commons'tan, bilgiler Wikipedia ve Wikidata'dan alınmıştır; telif hakları ilgili fotoğrafçılara ve yazarlara aittir (CC lisansları).</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
