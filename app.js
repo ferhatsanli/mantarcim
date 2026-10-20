@@ -210,3 +210,26 @@ function init() {
   render();
 }
 init();
+
+// ---- Yatay kaydırılan satırlar: kenarda solma + ilk açılışta kısa ipucu animasyonu ----
+function watchScroller(el) {
+  const upd = () => {
+    el.classList.toggle("can-l", el.scrollLeft > 4);
+    el.classList.toggle("can-r", el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  };
+  el.addEventListener("scroll", upd, { passive: true });
+  new ResizeObserver(upd).observe(el);
+  new MutationObserver(upd).observe(el, { childList: true });
+  upd();
+}
+["tabs", "letters"].forEach((id) => watchScroller($(id)));
+// Sayfa ilk açıldığında sekme satırı kısa süre sağa kayıp geri döner: "devamı var" ipucu
+try {
+  if (!sessionStorage.getItem("mk-peeked") && $("tabs").scrollWidth > $("tabs").clientWidth + 8 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    sessionStorage.setItem("mk-peeked", "1");
+    setTimeout(() => { $("tabs").scrollTo({ left: 56, behavior: "smooth" }); setTimeout(() => $("tabs").scrollTo({ left: 0, behavior: "smooth" }), 900); }, 700);
+  }
+} catch (e) {}
+// Başa dön düğmesi
+addEventListener("scroll", () => $("top").classList.toggle("show", scrollY > 700), { passive: true });
+$("top").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));

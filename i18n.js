@@ -2,7 +2,7 @@
 const I18N = {
   tr: {
     title: "Mantar Kataloğu",
-    search: "Türkçe, Latince veya cins adıyla ara…", search_aria: "Mantar ara", theme: "Açık / koyu tema", close: "Kapat",
+    search: "Türkçe, Latince veya cins adıyla ara…", search_aria: "Mantar ara", theme: "Açık / koyu tema", close: "Kapat", top: "Başa dön",
     all: "Tümü", az_all: "A–Z", az_latin: "Latince adlı", az_aria: "Ada göre harf kataloğu",
     ms_note: "Türkçe adlar ve Türkiye'ye dair mevsim/bölge bilgileri için mantarliyasam.com ile karşılaştırılmıştır.", ms_link: "Mantarlı Yaşam'da oku ↗",
     cat: { yenilebilir: "Yenilebilir", sartli: "Şartlı Yenilebilir", zehirli: "Zehirli", olumcul: "Ölümcül", halusinojen: "Halüsinojen" },
@@ -27,7 +27,7 @@ const I18N = {
   },
   en: {
     title: "Mushroom Catalog",
-    search: "Search by common, Latin or genus name…", search_aria: "Search mushrooms", theme: "Light / dark theme", close: "Close",
+    search: "Search by common, Latin or genus name…", search_aria: "Search mushrooms", theme: "Light / dark theme", close: "Close", top: "Back to top",
     all: "All", az_all: "A–Z", az_latin: "Latin only", az_aria: "Alphabetical index by name",
     ms_note: "Turkish names and Turkish season/region information were cross-checked against mantarliyasam.com.", ms_link: "Read on Mantarlı Yaşam ↗",
     cat: { yenilebilir: "Edible", sartli: "Conditionally Edible", zehirli: "Poisonous", olumcul: "Deadly", halusinojen: "Hallucinogenic" },

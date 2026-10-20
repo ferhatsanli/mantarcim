@@ -92,6 +92,8 @@ h1 { margin: 0; font-size: 21px; letter-spacing: -.02em; white-space: nowrap; }
 .btn.icon { width: 40px; height: 40px; padding: 0; display: grid; place-items: center; font-size: 17px; }
 .btn:focus-visible, .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+.fade-x { --fl: 0px; --fr: 0px; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); }
+.fade-x.can-l { --fl: 28px; } .fade-x.can-r { --fr: 36px; }
 .tabs { display: flex; gap: 8px; margin-top: 12px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
 .letters { display: flex; gap: 6px; margin-top: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
 .letters::-webkit-scrollbar { display: none; }
@@ -117,7 +119,9 @@ main { width: min(1240px, calc(100% - 24px)); margin: 0 auto; padding-bottom: 32
 .info-body p { margin: 8px 0; } .info-body ul { margin: 6px 0; padding-left: 20px; } .info-body li { margin: 3px 0; }
 .info-body .src { color: var(--muted); font-size: 12px; }
 .count { color: var(--muted); font-size: 13px; margin: 12px 6px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr)); gap: 18px; }
+.card { min-width: 0; }
+.info h3, .info em { overflow-wrap: anywhere; }
 
 .card {
   position: relative; display: flex; flex-direction: column; text-align: left; padding: 8px; color: inherit; font: inherit; cursor: pointer;
@@ -169,12 +173,31 @@ dialog::backdrop { background: rgba(20, 14, 10, .35); -webkit-backdrop-filter: b
 
 footer { text-align: center; color: var(--muted); font-size: 12px; padding: 12px 20px 40px; }
 
-@media (max-width: 560px) {
-  h1 { font-size: 18px; }
-  .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (max-width: 700px) {
+  /* Üst çubuk: yapışkan olmasın (ekranı kaplamasın); başlık + dil + tema tek satırda, arama altta */
+  .toolbar { position: static; margin-top: 10px; padding: 12px 12px 12px; border-radius: 22px; }
+  .toolbar-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 8px 8px; }
+  .toolbar-row > h1 { grid-column: 1; grid-row: 1; font-size: 18px; overflow: hidden; text-overflow: ellipsis; }
+  .toolbar-row > .lang { grid-column: 2; grid-row: 1; }
+  .toolbar-row > #theme { grid-column: 3; grid-row: 1; }
+  .toolbar-row > .search { grid-column: 1 / -1; grid-row: 2; flex: none; }
+  .btn.lang { width: 44px; } .btn.icon { width: 40px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .card { border-radius: 20px; padding: 6px; }
   .info h3 { font-size: 14px; } .info em { font-size: 12px; }
+  .intro { font-size: 13px; } .cat-head { font-size: 18px; }
+  main, .toolbar { width: calc(100% - 20px); }
 }
+@media (max-width: 439px) {
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }   /* dar telefonlarda tek sütun */
+  .info h3 { font-size: 16px; } .info em { font-size: 13px; }
+  dialog { width: calc(100% - 16px); border-radius: 24px; }
+  .m-text { padding: 14px 16px 20px; } .m-text h2 { font-size: 22px; }
+}
+/* Yukarı çık düğmesi (mobilde yapışkan üst çubuk olmadığı için) */
+.btn.fab { position: fixed; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 30; width: 46px; height: 46px; display: none; font-size: 20px; }
+.btn.fab.show { display: grid; }
+@media (min-width: 701px) { .btn.fab.show { display: none; } }
 /* Cam efekti desteklenmeyen tarayıcılarda opak yüzey */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass, .glass-inset, .card, .btn { background: var(--glass-strong); }

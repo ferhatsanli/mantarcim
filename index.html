@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>Mantar Kataloğu</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=20261021b">
 <script>
   // Tema ve dil titremesini önlemek için erken uygula
   try {
@@ -30,8 +30,8 @@
     <button class="btn lang" id="lang" aria-label="Language / Dil" title="Language / Dil"></button>
     <button class="btn icon" id="theme" data-i18n-aria="theme" data-i18n-title="theme"></button>
   </div>
-  <div class="tabs" id="tabs" role="tablist"></div>
-  <div class="letters" id="letters" role="group" data-i18n-aria="az_aria"></div>
+  <div class="tabs fade-x" id="tabs" role="tablist"></div>
+  <div class="letters fade-x" id="letters" role="group" data-i18n-aria="az_aria"></div>
 </header>
 
 <main>
@@ -50,10 +50,12 @@
   <div id="modal-body"></div>
 </dialog>
 
+<button class="btn icon fab" id="top" data-i18n-aria="top" aria-label="Yukarı">↑</button>
+
 <footer data-i18n="footer"></footer>
 
-<script src="data.js"></script>
-<script src="i18n.js"></script>
-<script src="app.js"></script>
+<script src="data.js?v=20261021b"></script>
+<script src="i18n.js?v=20261021b"></script>
+<script src="app.js?v=20261021b"></script>
 </body>
 </html>
