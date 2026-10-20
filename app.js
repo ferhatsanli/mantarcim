@@ -69,6 +69,7 @@ function openModal(id) {
           ${m.h ? `<dt>Yetiştiği yer</dt><dd>${esc(m.h)}</dd>` : ""}${m.s ? `<dt>Mevsim</dt><dd>${esc(m.s)}</dd>` : ""}
           ${tags ? `<dt>Etiketler</dt><dd>${tags}</dd>` : ""}</dl>
         ${m.w ? `<div class="warn"><strong>Dikkat:</strong> ${esc(m.w)}</div>` : ""}
+        ${m.src ? `<p class="wiki">Türkçe bilgi kaynağı: E. Karaduman, "Doğal Mantarlar" (Samsun Tarım ve Orman İl Müdürlüğü); Türkçe Vikipedi.</p>` : ""}
         ${m.x ? `<p class="wiki"><strong>Wikipedia özeti (İngilizce):</strong> ${esc(m.x)}</p>` : ""}
         <div class="m-actions">
           <a class="btn" href="https://en.wikipedia.org/wiki/${encodeURIComponent(m.p)}" target="_blank" rel="noopener">Wikipedia'da aç ↗</a>

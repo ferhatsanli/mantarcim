@@ -102,6 +102,11 @@ h1 { margin: 0; font-size: 21px; letter-spacing: -.02em; white-space: nowrap; }
 main { width: min(1240px, calc(100% - 24px)); margin: 0 auto; padding-bottom: 32px; }
 .intro { margin: 18px 0 8px; padding: 14px 18px; border-radius: 20px; font-size: 14px; }
 .intro p { margin: 0; }
+.info-card { margin: 12px 0 8px; border-radius: 20px; font-size: 14px; }
+.info-card summary { cursor: pointer; padding: 14px 18px; font-weight: 600; list-style-position: inside; }
+.info-body { padding: 0 18px 14px; }
+.info-body p { margin: 8px 0; } .info-body ul { margin: 6px 0; padding-left: 20px; } .info-body li { margin: 3px 0; }
+.info-body .src { color: var(--muted); font-size: 12px; }
 .count { color: var(--muted); font-size: 13px; margin: 12px 6px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
 
