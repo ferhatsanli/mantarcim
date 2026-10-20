@@ -156,7 +156,7 @@ const DETAILS = {};
 function loadDetails(lang) {
   if (DETAILS[lang] && DETAILS[lang].then === undefined) return Promise.resolve(DETAILS[lang]);
   if (!DETAILS[lang]) {
-    DETAILS[lang] = fetch(`details-${lang}.json?v=20261021e`).then((r) => r.json()).then((j) => (DETAILS[lang] = j)).catch(() => { DETAILS[lang] = null; return {}; });
+    DETAILS[lang] = fetch(`details-${lang}.json?v=20261021f`).then((r) => r.json()).then((j) => (DETAILS[lang] = j)).catch(() => { DETAILS[lang] = null; return {}; });
   }
   return DETAILS[lang];
 }
@@ -186,6 +186,7 @@ function applyLang() {
   document.querySelectorAll("[data-i18n-aria]").forEach((el) => { el.setAttribute("aria-label", t[el.dataset.i18nAria]); });
   document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.title = t[el.dataset.i18nTitle]; });
   $("lang").textContent = isTr() ? "EN" : "TR";
+  $("lang").dataset.to = isTr() ? "en" : "tr";   // hedef dilin bayrağı CSS ile çizilir
   buildTabs();
   state.letter = "";
   buildLetters();

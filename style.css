@@ -205,6 +205,23 @@ footer { text-align: center; color: var(--muted); font-size: 12px; padding: 12px
 .btn.fab { position: fixed; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 30; width: 46px; height: 46px; display: none; font-size: 20px; }
 .btn.fab.show { display: grid; }
 @media (min-width: 701px) { .btn.fab.show { display: none; } }
+
+/* Dil düğmesi: hedef dilin bayrağı cam yüzeyin arkasından hafifçe seçilir */
+.btn.lang { position: relative; overflow: hidden; isolation: isolate; width: 54px; color: var(--ink); font-weight: 700; text-shadow: 0 1px 2px rgba(255, 255, 255, .85); }
+.btn.lang[data-to="tr"] { --flag: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20'><rect width='30' height='20' fill='%23e30a17'/><circle cx='10.8' cy='10' r='5' fill='%23fff'/><circle cx='12.2' cy='10' r='4' fill='%23e30a17'/><polygon points='18.40,9.35 17.21,10.26 17.63,11.70 16.40,10.85 15.17,11.70 15.59,10.26 14.40,9.35 15.90,9.31 16.40,7.90 16.90,9.31' fill='%23fff'/></svg>"); }
+.btn.lang[data-to="en"] { --flag: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30'><clipPath id='a'><path d='M0 0h60v30H0z'/></clipPath><clipPath id='b'><path d='M30 15h30v15zv15H0zH0V0zV0h30z'/></clipPath><g clip-path='url(%23a)'><path d='M0 0v30h60V0z' fill='%23012169'/><path d='M0 0l60 30m0-30L0 30' stroke='%23fff' stroke-width='6'/><path d='M0 0l60 30m0-30L0 30' clip-path='url(%23b)' stroke='%23C8102E' stroke-width='4'/><path d='M30 0v30M0 15h60' stroke='%23fff' stroke-width='10'/><path d='M30 0v30M0 15h60' stroke='%23C8102E' stroke-width='6'/></g></svg>"); }
+.btn.lang::before { content: ""; position: absolute; inset: 0; z-index: -2; background: var(--flag) center / cover no-repeat; opacity: .5; filter: saturate(.8); transition: opacity .2s; }
+.btn.lang::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(255,255,255,.7), transparent 75%), linear-gradient(135deg, rgba(255,255,255,.5), rgba(255,255,255,.1) 55%, transparent); }
+.btn.lang:hover::before { opacity: .68; }
+:root[data-theme="dark"] .btn.lang { text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
+:root[data-theme="dark"] .btn.lang::before { opacity: .38; }
+:root[data-theme="dark"] .btn.lang::after { background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(20,16,12,.55), transparent 75%), linear-gradient(135deg, rgba(255,255,255,.22), rgba(255,255,255,.04) 55%, transparent); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn.lang { text-shadow: 0 1px 3px rgba(0, 0, 0, .7); }
+  :root:not([data-theme="light"]) .btn.lang::before { opacity: .38; }
+  :root:not([data-theme="light"]) .btn.lang::after { background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(20,16,12,.55), transparent 75%), linear-gradient(135deg, rgba(255,255,255,.22), rgba(255,255,255,.04) 55%, transparent); }
+}
+
 /* Cam efekti desteklenmeyen tarayıcılarda opak yüzey */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass, .glass-inset, .card, .btn { background: var(--glass-strong); }
