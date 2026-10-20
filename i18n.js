@@ -3,7 +3,8 @@ const I18N = {
   tr: {
     title: "Mantar Kataloğu",
     search: "Türkçe, Latince veya cins adıyla ara…", search_aria: "Mantar ara", theme: "Açık / koyu tema", close: "Kapat",
-    all: "Tümü",
+    all: "Tümü", az_all: "A–Z", az_latin: "Latince adlı", az_aria: "Ada göre harf kataloğu",
+    ms_note: "Türkçe adlar ve Türkiye'ye dair mevsim/bölge bilgileri için mantarliyasam.com ile karşılaştırılmıştır.", ms_link: "Mantarlı Yaşam'da oku ↗",
     cat: { yenilebilir: "Yenilebilir", sartli: "Şartlı Yenilebilir", zehirli: "Zehirli", olumcul: "Ölümcül", halusinojen: "Halüsinojen" },
     count: (n) => `${n} mantar türü listeniyor`, more: (n) => `Daha fazla göster (${n} tür daha)`, empty: "Sonuç bulunamadı.",
     genus: "Cins", genus_sub: (g) => `${g} cinsi`, habitat: "Yetiştiği ortam", hab_note: "Cins düzeyinde genel bilgi ve Wikipedia metninden otomatik derlenmiştir; yerel ayrıntılar farklı olabilir.", season: "Mevsim", tags: "Etiketler",
@@ -27,7 +28,8 @@ const I18N = {
   en: {
     title: "Mushroom Catalog",
     search: "Search by common, Latin or genus name…", search_aria: "Search mushrooms", theme: "Light / dark theme", close: "Close",
-    all: "All",
+    all: "All", az_all: "A–Z", az_latin: "Latin only", az_aria: "Alphabetical index by name",
+    ms_note: "Turkish names and Turkish season/region information were cross-checked against mantarliyasam.com.", ms_link: "Read on Mantarlı Yaşam ↗",
     cat: { yenilebilir: "Edible", sartli: "Conditionally Edible", zehirli: "Poisonous", olumcul: "Deadly", halusinojen: "Hallucinogenic" },
     count: (n) => `Showing ${n} mushroom species`, more: (n) => `Show more (${n} more)`, empty: "No results found.",
     genus: "Genus", genus_sub: (g) => `Genus ${g}`, habitat: "Habitat", hab_note: "Compiled automatically from genus-level knowledge and Wikipedia text; local details may differ.", season: "Season", tags: "Tags",

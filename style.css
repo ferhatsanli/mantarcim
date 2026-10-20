@@ -93,6 +93,14 @@ h1 { margin: 0; font-size: 21px; letter-spacing: -.02em; white-space: nowrap; }
 .btn:focus-visible, .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .tabs { display: flex; gap: 8px; margin-top: 12px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.letters { display: flex; gap: 6px; margin-top: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.letters::-webkit-scrollbar { display: none; }
+.btn.chip { flex: none; min-width: 34px; height: 32px; padding: 0 10px; font-size: 13px; font-weight: 600; }
+.btn.chip.latin { font-style: italic; }
+.btn.chip[aria-pressed="true"] { background: var(--glass-strong); border-color: var(--accent); box-shadow: var(--glass-hi), 0 0 0 2px color-mix(in srgb, var(--accent) 40%, transparent); color: var(--accent); }
+.btn.chip:disabled { opacity: .35; cursor: default; transform: none; }
+.cat-head { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; margin: 18px 4px 0; font-size: 20px; letter-spacing: -.01em; }
+.cat-head .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--cc); box-shadow: 0 0 0 3px rgba(255, 255, 255, .45); }
 .tabs::-webkit-scrollbar { display: none; }
 .tab { white-space: nowrap; display: inline-flex; align-items: center; gap: 7px; }
 .tab .n { font-size: 12px; opacity: .7; }

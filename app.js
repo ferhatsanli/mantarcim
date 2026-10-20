@@ -6,7 +6,7 @@ const store = {
   set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
 };
 const state = {
-  cat: "hepsi", q: "", shown: PAGE,
+  cat: "hepsi", q: "", letter: "", shown: PAGE,
   lang: store.get("mk-lang") || ((navigator.language || "tr").toLowerCase().startsWith("tr") ? "tr" : "en"),
 };
 const T = () => I18N[state.lang];
@@ -33,9 +33,21 @@ const warning = (m) => (isTr() ? m.w : m.we);
 
 MUSHROOMS.forEach((m) => { m.s_ = norm([m.t, m.n, m.l, m.g].filter(Boolean).join(" ")); });
 
-function filtered() {
+const CAT_ORDER = ["yenilebilir", "sartli", "zehirli", "olumcul", "halusinojen"];
+const localName = (m) => (isTr() ? m.t : m.n) || "";
+// Harf: yerel (Türkçe/İngilizce) adın ilk harfi; Latince adı olmayanlar harf filtresine girmez
+function letterOf(m) {
+  const n = localName(m).trim(); if (!n) return "";
+  const c = n[0].toLocaleUpperCase(isTr() ? "tr" : "en");
+  return /\p{L}/u.test(c) ? c : "";
+}
+function filtered(ignoreLetter = false) {
   const q = norm(state.q);
-  return MUSHROOMS.filter((m) => (state.cat === "hepsi" || m.c === state.cat) && (!q || m.s_.includes(q)));
+  const list = MUSHROOMS.filter((m) => (state.cat === "hepsi" || m.c === state.cat) && (!q || m.s_.includes(q)) &&
+    (ignoreLetter || !state.letter || (state.letter === "#" ? !localName(m) : letterOf(m) === state.letter)));
+  // Her kategoride alfabetik sıra (görünen ada göre, Türkçe harf sırasıyla)
+  const col = new Intl.Collator(isTr() ? "tr" : "en", { sensitivity: "base" });
+  return list.sort((x, y) => CAT_ORDER.indexOf(x.c) - CAT_ORDER.indexOf(y.c) || col.compare(title(x), title(y)));
 }
 
 function cardHTML(m) {
@@ -68,10 +80,33 @@ function render(reset = true) {
   const list = filtered();
   if (reset) state.shown = PAGE;
   $("count").textContent = T().count(list.length);
-  $("grid").innerHTML = list.slice(0, state.shown).map(cardHTML).join("") || `<p class="empty">${T().empty}</p>`;
+  let html = "", prev = null;
+  for (const m of list.slice(0, state.shown)) {
+    if (state.cat === "hepsi" && m.c !== prev) { html += `<h2 class="cat-head" style="${catVar(m.c)}"><span class="dot"></span>${T().cat[m.c]}</h2>`; prev = m.c; }
+    html += cardHTML(m);
+  }
+  $("grid").innerHTML = html || `<p class="empty">${T().empty}</p>`;
   bindImages($("grid"));
   $("more").hidden = list.length <= state.shown;
   $("more").textContent = T().more(list.length - state.shown);
+  paintLetters();
+}
+
+// ---- Alfabetik katalog ----
+function buildLetters() {
+  const col = new Intl.Collator(isTr() ? "tr" : "en");
+  const base = MUSHROOMS.filter((m) => state.cat === "hepsi" || m.c === state.cat);
+  const counts = {}; let latin = 0;
+  base.forEach((m) => { const l = letterOf(m); if (l) counts[l] = (counts[l] || 0) + 1; else latin++; });
+  const all = [...new Set(MUSHROOMS.map(letterOf).filter(Boolean))].sort(col.compare);
+  $("letters").innerHTML =
+    `<button class="btn chip" data-letter="" aria-pressed="false">${T().az_all}</button>` +
+    all.map((l) => `<button class="btn chip" data-letter="${l}" aria-pressed="false" ${counts[l] ? "" : "disabled"} title="${counts[l] || 0}">${l}</button>`).join("") +
+    `<button class="btn chip latin" data-letter="#" aria-pressed="false" ${latin ? "" : "disabled"} title="${latin}">${T().az_latin}</button>`;
+  paintLetters();
+}
+function paintLetters() {
+  document.querySelectorAll("#letters .chip").forEach((c) => c.setAttribute("aria-pressed", c.dataset.letter === state.letter));
 }
 
 let openId = null;
@@ -93,9 +128,11 @@ function openModal(id) {
           ${tags ? `<dt>${t.tags}</dt><dd>${tags}</dd>` : ""}</dl>
         ${w ? `<div class="warn"><strong>${t.warn}</strong> ${esc(w)}</div>` : ""}
         ${m.src && isTr() ? `<p class="wiki">${t.src}</p>` : ""}
+        ${m.ms ? `<p class="wiki">${t.ms_note}</p>` : ""}
         ${m.x ? `<p class="wiki"><strong>${t.wiki_sum}</strong> ${esc(m.x)}</p>` : ""}
         <div class="m-actions">
           <a class="btn" href="https://en.wikipedia.org/wiki/${encodeURIComponent(m.p)}" target="_blank" rel="noopener">${t.wiki_en}</a>
+          ${m.ms ? `<a class="btn" href="https://mantarliyasam.com/${m.ms}" target="_blank" rel="noopener">${t.ms_link}</a>` : ""}
           ${isTr() ? `<a class="btn" href="https://tr.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(m.l)}" target="_blank" rel="noopener">${t.wiki_tr}</a>` : ""}
         </div>
       </div>
@@ -129,6 +166,8 @@ function applyLang() {
   document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.title = t[el.dataset.i18nTitle]; });
   $("lang").textContent = isTr() ? "EN" : "TR";
   buildTabs();
+  state.letter = "";
+  buildLetters();
 }
 function buildTabs() {
   const counts = { hepsi: MUSHROOMS.length };
@@ -152,11 +191,17 @@ function init() {
     const b = e.target.closest(".tab"); if (!b) return;
     state.cat = b.dataset.cat;
     document.querySelectorAll(".tab").forEach((x) => x.setAttribute("aria-selected", x === b));
-    render();
+    if (state.letter && state.letter !== "#" && !filtered(true).some((m) => letterOf(m) === state.letter)) state.letter = "";
+    buildLetters(); render();
   });
   let timer;
   $("search").addEventListener("input", (e) => { clearTimeout(timer); timer = setTimeout(() => { state.q = e.target.value.trim(); render(); }, 120); });
   $("grid").addEventListener("click", (e) => { const c = e.target.closest(".card"); if (c) openModal(c.dataset.id); });
+  $("letters").addEventListener("click", (e) => {
+    const b = e.target.closest(".chip"); if (!b || b.disabled) return;
+    state.letter = b.dataset.letter === state.letter ? "" : b.dataset.letter;
+    render();
+  });
   $("more").addEventListener("click", () => { state.shown += PAGE; render(false); });
   $("close").addEventListener("click", () => $("modal").close());
   $("modal").addEventListener("click", (e) => { if (e.target === $("modal")) $("modal").close(); });
