@@ -22,6 +22,9 @@ const catVar = (c) => `--cc: var(--c-${c})`;
 
 // Dile göre alanlar (İngilizce alan yoksa Latince / Türkçe'ye düşer)
 const title = (m) => (isTr() ? m.t : m.n) || m.l;
+// Yerel (Türkçe/İngilizce) adı olmayan türlerde başlık Latince adıdır: italik gösterilir
+const isLatinTitle = (m) => !(isTr() ? m.t : m.n);
+const titleHTML = (m) => (isLatinTitle(m) ? `<i class="latin-name">${esc(m.l)}</i>` : esc(title(m)));
 const subtitle = (m) => ((isTr() ? m.t : m.n) ? m.l : T().genus_sub(m.g));
 const desc = (m) => (isTr() ? m.d : m.de) || m.d;
 const habitat = (m) => (isTr() ? m.h : m.he);
@@ -40,7 +43,7 @@ function cardHTML(m) {
   return `<button class="card" data-id="${m.id}" style="${catVar(m.c)}">
     <div class="photo"><span>🍄</span><span class="badge">${icon} ${T().cat[m.c]}</span>
       <img src="${imgUrl(m, false)}" alt="${esc(title(m))}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div>
-    <div class="info"><h3>${esc(title(m))}</h3><em>${esc(subtitle(m))}</em></div>
+    <div class="info"><h3>${titleHTML(m)}</h3><em>${isLatinTitle(m) ? esc(T().genus_sub(m.g)) : esc(subtitle(m))}</em></div>
   </button>`;
 }
 
@@ -83,10 +86,10 @@ function openModal(id) {
       <div class="m-photo"><span>🍄</span><span class="badge">${CATEGORIES[m.c].icon} ${t.cat[m.c]}</span>
         <img src="${imgUrl(m, true)}" alt="${esc(title(m))}" referrerpolicy="no-referrer"></div>
       <div class="m-text">
-        <h2>${esc(title(m))}</h2><div class="latin">${esc(m.l)}</div>
+        <h2>${titleHTML(m)}</h2>${isLatinTitle(m) ? "" : `<div class="latin">${esc(m.l)}</div>`}
         <p>${esc(desc(m))}</p>
         <dl class="facts glass-inset"><dt>${t.genus}</dt><dd>${esc(m.g)}</dd>
-          ${h ? `<dt>${t.habitat}</dt><dd>${esc(h)}</dd>` : ""}${s ? `<dt>${t.season}</dt><dd>${esc(s)}</dd>` : ""}
+          ${h ? `<dt>${t.habitat}</dt><dd>${esc(h)}${m.hg ? `<span class="auto">${t.hab_note}</span>` : ""}</dd>` : ""}${s ? `<dt>${t.season}</dt><dd>${esc(s)}</dd>` : ""}
           ${tags ? `<dt>${t.tags}</dt><dd>${tags}</dd>` : ""}</dl>
         ${w ? `<div class="warn"><strong>${t.warn}</strong> ${esc(w)}</div>` : ""}
         ${m.src && isTr() ? `<p class="wiki">${t.src}</p>` : ""}
