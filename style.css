@@ -169,6 +169,8 @@ dialog { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
 .m-text h2 { margin: 0; font-size: 26px; letter-spacing: -.02em; }
 .m-text .latin { color: var(--muted); font-style: italic; }
 .m-text p { margin: 12px 0 0; }
+.about p { margin: 10px 0 0; }
+.about p:first-child { margin-top: 12px; }
 .facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 14px 0 0; font-size: 14px; padding: 12px 14px; border-radius: 16px; }
 .facts dt { color: var(--muted); } .facts dd { margin: 0; }
 .warn { margin-top: 14px; padding: 12px 14px; border-radius: 16px; font-size: 14px; background: color-mix(in srgb, var(--cc) 20%, transparent); border: 1px solid color-mix(in srgb, var(--cc) 50%, transparent); }

@@ -127,7 +127,7 @@ function openModal(id) {
         <img src="${imgUrl(m, true)}" alt="${esc(title(m))}" referrerpolicy="no-referrer"></div>
       <div class="m-text">
         <h2>${titleHTML(m)}</h2>${isLatinTitle(m) ? "" : `<div class="latin">${esc(m.l)}</div>`}
-        <p>${esc(desc(m))}</p>
+        <div class="about" id="about"><p>${esc(desc(m))}</p></div>
         <dl class="facts glass-inset"><dt>${t.genus}</dt><dd>${esc(m.g)}</dd>
           ${h ? `<dt>${t.habitat}</dt><dd>${esc(h)}${m.hg ? `<span class="auto">${t.hab_note}</span>` : ""}</dd>` : ""}${s ? `<dt>${t.season}</dt><dd>${esc(s)}</dd>` : ""}
           ${tags ? `<dt>${t.tags}</dt><dd>${tags}</dd>` : ""}</dl>
@@ -144,10 +144,24 @@ function openModal(id) {
       </div>
     </div>`;
   $("modal-title").textContent = title(m);
+  const lang = state.lang;
+  loadDetails(lang).then((d) => { const t = d && d[id]; if (t && openId === id && state.lang === lang && $("about")) $("about").innerHTML = paras(t); });
   bindImages($("modal-body"));
   if (!$("modal").open) { $("modal").showModal(); document.documentElement.classList.add("modal-open"); }
   $("modal").scrollTop = 0;
 }
+
+// ---- Ayrıntılı açıklamalar: dil başına ayrı JSON, tembel yüklenir (ana veriyi şişirmez) ----
+const DETAILS = {};
+function loadDetails(lang) {
+  if (DETAILS[lang] && DETAILS[lang].then === undefined) return Promise.resolve(DETAILS[lang]);
+  if (!DETAILS[lang]) {
+    DETAILS[lang] = fetch(`details-${lang}.json?v=20261021e`).then((r) => r.json()).then((j) => (DETAILS[lang] = j)).catch(() => { DETAILS[lang] = null; return {}; });
+  }
+  return DETAILS[lang];
+}
+const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1200));
+const paras = (s) => s.split("\n").map((p) => `<p>${esc(p)}</p>`).join("");
 
 // ---- Tema ----
 const mq = matchMedia("(prefers-color-scheme: dark)");
@@ -187,6 +201,7 @@ function buildTabs() {
 $("lang").addEventListener("click", () => {
   state.lang = isTr() ? "en" : "tr";
   store.set("mk-lang", state.lang);
+  idle(() => loadDetails(state.lang));
   applyLang();
   render(false);
   if ($("modal").open && openId) openModal(openId);
@@ -217,6 +232,7 @@ function init() {
   paintThemeBtn();
   applyLang();
   render();
+  idle(() => loadDetails(state.lang));   // sayfa çizildikten sonra, boş zamanda
 }
 init();
 
