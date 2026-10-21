@@ -1,7 +1,7 @@
 // Arayüz metinleri (TR / EN). Mantar verisindeki metinler data.js içinde: tr -> d,h,s,w,t ; en -> de,he,se,we,n
 const I18N = {
   tr: {
-    title: "Mantar Kataloğu",
+    title: "Mantarcım",
     search: "Türkçe, Latince veya cins adıyla ara…", search_aria: "Mantar ara", theme: "Açık / koyu tema", close: "Kapat", top: "Başa dön",
     all: "Tümü", az_all: "A–Z", az_latin: "Latince adlı", az_aria: "Ada göre harf kataloğu",
     ms_note: "Türkçe adlar ve Türkiye'ye dair mevsim/bölge bilgileri için mantarliyasam.com ile karşılaştırılmıştır.", ms_link: "Mantarlı Yaşam'da oku ↗", um_link: "Ultimate Mushroom'da oku ↗",
@@ -26,7 +26,7 @@ const I18N = {
     footer: "Fotoğraflar Wikimedia Commons'tan, bilgiler Wikipedia ve Wikidata'dan alınmış, mantarliyasam.com ve ultimate-mushroom.com ile karşılaştırılmıştır; telif hakları ilgili fotoğrafçılara ve yazarlara aittir (CC lisansları).",
   },
   en: {
-    title: "Mushroom Catalog",
+    title: "Mantarcım",
     search: "Search by common, Latin or genus name…", search_aria: "Search mushrooms", theme: "Light / dark theme", close: "Close", top: "Back to top",
     all: "All", az_all: "A–Z", az_latin: "Latin only", az_aria: "Alphabetical index by name",
     ms_note: "Turkish names and Turkish season/region information were cross-checked against mantarliyasam.com.", ms_link: "Read on Mantarlı Yaşam ↗", um_link: "Read on Ultimate Mushroom ↗",
